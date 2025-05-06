@@ -54,6 +54,7 @@ class NoteController extends Controller
 
     }
 
+    // getting the single notes
     function singleNote($postID)
     {
         $single_note = Note::select(["title", "content", "id"])->where("id", $postID)->first();
@@ -61,6 +62,8 @@ class NoteController extends Controller
         return view("updateNotePage", ["note" => $single_note]);
     }
 
+
+    // update the form controller
     function updateNoteForm(Request $request, $postID)
     {
         $validate = $request->validate([
@@ -87,6 +90,7 @@ class NoteController extends Controller
 
     }
 
+    // deleting the notes controller
     function deleteNote($postID)
     {
         $deleteNote = Note::where("id", $postID)->delete();
@@ -120,7 +124,7 @@ class NoteController extends Controller
             return redirect()->route("home")->with("techError", "Can't find the note.");
         }
 
-        return view("index", ["notes" => $notes]);
+        return view("index", ["notes" => $notes])->with("backKey", "true");
     }
 
 }
